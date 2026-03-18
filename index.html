@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alkimi × LinkedIn — Knowledge Base</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --li-blue:    #0A66C2;
+      --li-blue-lt: #378fe9;
+      --li-blue-bg: #EBF3FB;
+      --page-bg:    #F3F2EE;
+      --card-bg:    #FFFFFF;
+      --border:     rgba(0,0,0,0.10);
+      --shadow:     0 0 0 1px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.06);
+      --text:       rgba(0,0,0,0.90);
+      --muted:      rgba(0,0,0,0.55);
+      --muted2:     rgba(0,0,0,0.38);
+      --radius:     8px;
+      --font:       -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--page-bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── LINKEDIN TOP NAV ── */
+    .li-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border);
+      height: 52px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 8px;
+    }
+    .li-nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .li-nav-logo svg { width: 34px; height: 34px; }
+    .li-nav-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+      margin: 0 4px;
+      flex-shrink: 0;
+    }
+    .alkimi-nav-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    .alkimi-nav-mark {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .alkimi-nav-mark svg { width: 13px; height: 17px; }
+    .alkimi-nav-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .alkimi-generated-tag {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--muted2);
+      letter-spacing: 0.04em;
+    }
+    .li-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #EEF3F8;
+      border-radius: 4px;
+      padding: 6px 12px;
+      flex: 1;
+      max-width: 260px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .li-search svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .li-nav-center {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin: 0 auto;
+    }
+    .li-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 0 14px;
+      height: 52px;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 400;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .li-nav-item:hover { color: var(--text); border-color: var(--text); }
+    .li-nav-item.active { color: var(--text); border-bottom-color: var(--text); }
+    .li-nav-item svg { width: 22px; height: 22px; }
+    .li-nav-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: auto;
+    }
+    .li-nav-btn {
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid var(--li-blue);
+      color: var(--li-blue);
+      background: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .li-nav-btn:hover { background: var(--li-blue-bg); }
+    .li-nav-btn.filled { background: var(--li-blue); color: #fff; border-color: var(--li-blue); }
+    .li-nav-btn.filled:hover { background: var(--li-blue-lt); }
+
+    /* ── PAGE LAYOUT ── */
+    .li-page {
+      max-width: 1128px;
+      margin: 24px auto;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: 225px 1fr 300px;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 992px) {
+      .li-page { grid-template-columns: 225px 1fr; }
+      .li-sidebar-right { display: none; }
+    }
+    @media (max-width: 640px) {
+      .li-page { grid-template-columns: 1fr; }
+      .li-sidebar-left { display: none; }
+    }
+
+    /* ── CARD ── */
+    .li-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .li-card + .li-card { margin-top: 8px; }
+
+    /* ── LEFT SIDEBAR ── */
+    .profile-card { overflow: visible; }
+    .profile-bg {
+      height: 64px;
+      background: linear-gradient(135deg, #0A66C2 0%, #004182 100%);
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .profile-bg-alkimi {
+      position: absolute;
+      right: 10px;
+      bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      opacity: 0.7;
+    }
+    .profile-bg-alkimi svg { width: 12px; height: 12px; }
+    .profile-bg-alkimi span {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: 0.05em;
+    }
+    .profile-avatar-wrap {
+      padding: 0 16px;
+      margin-top: -34px;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    /* Profile photo — replace the src below with Aaron's actual photo URL */
+    .profile-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      background: #0A66C2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .profile-initials {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+    .profile-info { padding: 0 16px 12px; }
+    .profile-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+    .profile-title { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .profile-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+    .profile-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .profile-stat:hover { background: var(--page-bg); }
+    .profile-stat .ps-label { color: var(--muted); }
+    .profile-stat .ps-val { color: var(--li-blue); font-weight: 600; }
+
+    .sidebar-nav-card { margin-top: 8px; }
+    .sidebar-nav-title {
+      padding: 12px 16px 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .sidebar-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      font-size: 14px;
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 0;
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    .sidebar-nav-item:hover { background: var(--page-bg); }
+    .sidebar-nav-item svg { width: 18px; height: 18px; color: var(--muted); flex-shrink: 0; }
+    .sidebar-nav-item.active { font-weight: 600; color: var(--li-blue); }
+    .sidebar-nav-item.active svg { color: var(--li-blue); }
+
+    .sidebar-footer { padding: 12px 16px; }
+    .sidebar-footer p { font-size: 11px; color: var(--muted2); line-height: 1.6; }
+    .sidebar-footer a { color: var(--muted2); text-decoration: none; }
+    .sidebar-footer a:hover { color: var(--li-blue); text-decoration: underline; }
+
+    /* Alkimi sidebar badge */
+    .alkimi-sidebar-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px 12px;
+      border-top: 1px solid var(--border);
+    }
+    .alkimi-sidebar-badge svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .alkimi-sidebar-badge span { font-size: 11px; color: var(--muted2); }
+    .alkimi-sidebar-badge strong { color: var(--text); font-weight: 600; }
+
+    /* ── RIGHT SIDEBAR ── */
+    .right-card-title {
+      padding: 12px 16px 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .right-format-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      border-top: 1px solid var(--border);
+    }
+    .rfi-icon {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--li-blue-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .rfi-icon svg { width: 18px; height: 18px; stroke: var(--li-blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .rfi-text .rfi-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .rfi-text .rfi-sub { font-size: 12px; color: var(--muted); }
+
+    .right-cta-card { margin-top: 8px; overflow: hidden; }
+    .right-cta-bg {
+      background: linear-gradient(135deg, #0A66C2 0%, #004182 100%);
+      padding: 20px 16px 14px;
+      text-align: center;
+    }
+    .right-cta-avatar {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      overflow: hidden;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .right-cta-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .right-cta-bg p { font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 12px; }
+    .right-cta-bg h4 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .right-cta-btn {
+      display: block;
+      background: #fff;
+      color: var(--li-blue);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 8px;
+      border-radius: 16px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .right-cta-btn:hover { background: #e8f3fd; }
+
+    .right-stat-row {
+      display: flex;
+      gap: 12px;
+      padding: 12px 16px;
+    }
+    .rsb {
+      flex: 1;
+      background: var(--page-bg);
+      border-radius: 6px;
+      padding: 10px;
+      text-align: center;
+    }
+    .rsb .rval { font-size: 18px; font-weight: 700; color: var(--li-blue); }
+    .rsb .rlab { font-size: 10px; color: var(--muted); line-height: 1.3; margin-top: 2px; }
+
+    /* ── FEED CARDS ── */
+    .kb-use-card { }
+    .kb-use-header {
+      background: linear-gradient(135deg, #0A66C2 0%, #004182 100%);
+      padding: 20px 24px 16px;
+    }
+    .kb-use-header .kbu-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kbu-label { font-size: 15px; }
+    .kb-use-header h2 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .kb-use-header p { font-size: 13px; color: rgba(255,255,255,0.8); }
+    .kb-use-body { padding: 16px 24px 20px; }
+    .kb-use-body p { font-size: 14px; color: var(--muted); margin-bottom: 14px; line-height: 1.65; }
+    .kb-prompt-box {
+      background: #F3F2EE;
+      border-left: 3px solid var(--li-blue);
+      border-radius: 0 6px 6px 0;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: rgba(0,0,0,0.75);
+      line-height: 1.7;
+      font-style: italic;
+      margin: 12px 0 16px;
+    }
+    .kb-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .kb-chip {
+      background: var(--li-blue-bg);
+      color: var(--li-blue);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    /* Post-style card header */
+    .post-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px 16px 0;
+    }
+    .post-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0A66C2, #378fe9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .post-avatar svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .post-meta .pm-name { font-size: 14px; font-weight: 600; color: var(--text); }
+    .post-meta .pm-sub { font-size: 12px; color: var(--muted); }
+    .post-meta .pm-time { font-size: 12px; color: var(--muted2); }
+    .post-body { padding: 12px 16px 0; }
+    .post-body p { font-size: 14px; color: var(--text); line-height: 1.6; margin-bottom: 12px; }
+    .post-body h3 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .post-body .section-tag {
+      display: inline-block;
+      background: var(--li-blue-bg);
+      color: var(--li-blue);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .post-actions {
+      display: flex;
+      gap: 0;
+      border-top: 1px solid var(--border);
+      margin-top: 12px;
+    }
+    .post-action-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-radius: 0;
+      transition: background 0.15s, color 0.15s;
+      font-family: var(--font);
+    }
+    .post-action-btn:hover { background: var(--page-bg); color: var(--text); }
+    .post-action-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ── STAT BLOCKS ── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-top: 1px solid var(--border);
+      margin-top: 12px;
+    }
+    .stat-cell { background: var(--card-bg); padding: 16px; text-align: center; }
+    .stat-cell .sv { font-size: 22px; font-weight: 700; color: var(--li-blue); }
+    .stat-cell .sl { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+    /* ── FORMAT CARDS ── */
+    .format-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 12px 16px 16px;
+    }
+    @media (max-width: 640px) { .format-grid { grid-template-columns: 1fr; } }
+    .fmt-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: box-shadow 0.15s; }
+    .fmt-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .fmt-card-top {
+      background: linear-gradient(135deg, #0A66C2, #004182);
+      padding: 16px;
+      text-align: center;
+    }
+    .fmt-card-top.ctv { background: linear-gradient(135deg, #057642, #0a8a4e); }
+    .fmt-card-top.pmp { background: linear-gradient(135deg, #8B5CF6, #6D28D9); }
+    .fmt-card-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 8px;
+    }
+    .fmt-card-icon svg { width: 24px; height: 24px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .fmt-card-type { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.75); }
+    .fmt-card-name { font-size: 15px; font-weight: 700; color: #fff; margin-top: 2px; }
+    .fmt-card-body { padding: 12px; }
+    .fmt-card-body p { font-size: 12px; color: var(--muted); line-height: 1.55; margin-bottom: 10px; }
+    .fmt-badge {
+      display: inline-block;
+      background: var(--page-bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 7px;
+      border-radius: 10px;
+      margin: 2px 2px 0 0;
+    }
+    .fmt-badge.blue { background: var(--li-blue-bg); border-color: rgba(10,102,194,0.2); color: var(--li-blue); }
+    .fmt-kpi { font-size: 18px; font-weight: 700; color: var(--li-blue); }
+    .fmt-kpi-lab { font-size: 11px; color: var(--muted); }
+
+    /* ── ACTIVATION TABS ── */
+    .tab-bar { display: flex; border-bottom: 1px solid var(--border); padding: 0 16px; }
+    .tab-btn {
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      font-family: var(--font);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn.active { color: var(--li-blue); border-bottom-color: var(--li-blue); font-weight: 600; }
+    .tab-btn:hover:not(.active) { color: var(--text); background: var(--page-bg); }
+    .tab-panel { display: none; padding: 16px; }
+    .tab-panel.active { display: block; }
+
+    /* ── STEPS ── */
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step { display: flex; gap: 14px; padding-bottom: 20px; position: relative; }
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 16px; top: 36px; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--li-blue), rgba(10,102,194,0.1));
+    }
+    .step-dot {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--li-blue-bg);
+      border: 2px solid var(--li-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--li-blue);
+      flex-shrink: 0;
+    }
+    .step-content { padding-top: 6px; }
+    .step-content h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .step-content p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── TARGETING LAYERS ── */
+    .layer-stack { display: flex; flex-direction: column; gap: 8px; padding: 12px 16px 16px; }
+    .layer { border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; position: relative; background: var(--card-bg); overflow: hidden; }
+    .layer::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--li-blue); }
+    .layer-num-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px;
+      background: var(--li-blue); border-radius: 50%;
+      font-size: 10px; font-weight: 700; color: #fff;
+      margin-right: 8px; flex-shrink: 0;
+    }
+    .layer h4 { display: flex; align-items: center; font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+    .layer p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── ACCORDION ── */
+    .accordion { padding: 0 0 8px; }
+    .acc-item { border-top: 1px solid var(--border); }
+    .acc-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; cursor: pointer; transition: background 0.15s; }
+    .acc-header:hover { background: var(--page-bg); }
+    .acc-header h4 { font-size: 14px; font-weight: 500; color: var(--text); flex: 1; padding-right: 12px; }
+    .acc-icon { font-size: 16px; color: var(--muted); transition: transform 0.2s; flex-shrink: 0; }
+    .acc-item.open .acc-icon { transform: rotate(180deg); color: var(--li-blue); }
+    .acc-item.open .acc-header h4 { color: var(--li-blue); font-weight: 600; }
+    .acc-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .acc-body-inner { padding: 0 16px 16px; font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .acc-body-inner strong { color: var(--text); }
+
+    /* ── MEASUREMENT ── */
+    .measure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 16px 16px; }
+    .measure-card { background: var(--page-bg); border-radius: 8px; padding: 14px; }
+    .measure-icon {
+      width: 36px; height: 36px;
+      background: var(--li-blue-bg);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 10px;
+    }
+    .measure-icon svg { width: 18px; height: 18px; stroke: var(--li-blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .measure-card h4 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .measure-card p { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+    /* ── CTV PUBLISHERS ── */
+    .publisher-list { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 16px 16px; }
+    .pub-pill { background: var(--page-bg); border: 1px solid var(--border); color: var(--muted); font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 12px; }
+
+    /* ── CHECKLIST ── */
+    .checklist { list-style: none; }
+    .checklist li { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; font-size: 13px; color: var(--muted); line-height: 1.55; border-bottom: 1px solid var(--border); }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li::before { content: '✓'; color: var(--li-blue); font-weight: 700; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+    .checklist li strong { color: var(--text); }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; padding: 0 16px 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead th { text-align: left; padding: 10px 12px; color: var(--li-blue); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border-bottom: 2px solid var(--li-blue-bg); }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:hover { background: var(--page-bg); }
+    tbody td { padding: 10px 12px; color: var(--muted); vertical-align: top; }
+    tbody td:first-child { color: var(--text); font-weight: 500; }
+
+    /* ── INFO CHIP ── */
+    .info-chip { background: var(--li-blue-bg); border-radius: 6px; padding: 12px 16px; font-size: 13px; color: #004182; line-height: 1.65; margin: 0 16px 16px; }
+    .info-chip strong { color: #004182; }
+
+    /* ── CLIENT ROSTER ── */
+    .client-grid { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 16px 16px; }
+    .client-pill { background: var(--page-bg); border: 1px solid var(--border); color: var(--text); font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 12px; }
+
+    /* ── KB COPY SECTION ── */
+    .kb-copy-card { }
+    .kb-copy-header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 20px 24px 16px;
+    }
+    .kb-copy-header .kbc-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kbc-label svg { width: 12px; height: 16px; flex-shrink: 0; }
+    .kb-copy-header h2 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .kb-copy-header p { font-size: 13px; color: rgba(255,255,255,0.75); }
+    .kb-copy-body { padding: 16px 24px 20px; }
+    .kb-copy-body > p { font-size: 14px; color: var(--muted); margin-bottom: 14px; line-height: 1.65; }
+    .kb-platforms {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .kb-platform-pill {
+      background: var(--page-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .kb-textarea-wrap { position: relative; margin-top: 4px; }
+    .kb-textarea {
+      width: 100%;
+      height: 220px;
+      background: #F8F9FA;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 12px;
+      font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+      color: var(--muted);
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .kb-textarea:focus { border-color: var(--li-blue); }
+    .kb-copy-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .kb-copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--li-blue);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: background 0.15s;
+    }
+    .kb-copy-btn:hover { background: var(--li-blue-lt); }
+    .kb-copy-btn svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .kb-copied-msg {
+      font-size: 13px;
+      color: #057642;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      gap: 4px;
+    }
+    .kb-copied-msg.visible { display: flex; }
+    .kb-copy-hint { font-size: 12px; color: var(--muted2); margin-top: 8px; }
+
+    /* ── CTA BOTTOM ── */
+    .cta-card {
+      background: linear-gradient(135deg, #0A66C2 0%, #004182 100%);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: none;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 8px;
+    }
+    .cta-card h2 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .cta-card p { font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+    .cta-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .cta-btn-w { background: #fff; color: var(--li-blue); font-weight: 700; font-size: 14px; padding: 10px 20px; border-radius: 20px; text-decoration: none; transition: background 0.15s; }
+    .cta-btn-w:hover { background: #e8f3fd; }
+    .cta-btn-o { border: 2px solid rgba(255,255,255,0.6); color: #fff; font-weight: 600; font-size: 14px; padding: 10px 20px; border-radius: 20px; text-decoration: none; transition: background 0.15s; }
+    .cta-btn-o:hover { background: rgba(255,255,255,0.1); }
+
+    /* ── FOOTER ── */
+    .li-footer {
+      background: #fff;
+      border-top: 1px solid var(--border);
+      padding: 20px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted2);
+      max-width: 1128px;
+      margin: 24px auto 0;
+      border-radius: var(--radius);
+    }
+
+    hr.li-hr { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+    .sidebar-nav-item { position: relative; }
+  </style>
+</head>
+<body>
+
+<!-- ── TOP NAV ── -->
+<nav class="li-nav">
+  <!-- LinkedIn logo -->
+  <a class="li-nav-logo" href="#">
+    <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="34" height="34" rx="4" fill="#0A66C2"/>
+      <path d="M7 13.5h4.5V27H7V13.5zM9.25 11.8a2.3 2.3 0 110-4.6 2.3 2.3 0 010 4.6zM14.5 13.5H19v1.85c.68-1.28 2.3-2.1 4.2-2.1C27 13.25 27 16.5 27 19v8h-4.5v-7.5c0-1.8-.35-3.2-2.1-3.2-1.75 0-2.4 1.4-2.4 3.2V27h-3.5V13.5z" fill="white"/>
+    </svg>
+  </a>
+
+  <div class="li-nav-divider"></div>
+
+  <!-- Alkimi logo & generated-by tag -->
+  <div class="alkimi-nav-badge">
+    <div class="alkimi-nav-mark">
+      <span class="alkimi-nav-label" style="font-size: 13px; font-weight: 800; letter-spacing: -0.02em;">alkimi</span>
+    </div>
+    <span class="alkimi-generated-tag">Generated Document</span>
+  </div>
+
+  <div class="li-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    Alkimi × LinkedIn
+  </div>
+
+  <div class="li-nav-center">
+    <a href="#about" class="li-nav-item active">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      Overview
+    </a>
+    <a href="#solutions" class="li-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      Solutions
+    </a>
+    <a href="#targeting" class="li-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      Targeting
+    </a>
+    <a href="#faq" class="li-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      FAQ
+    </a>
+  </div>
+
+  <div class="li-nav-right">
+    <a href="mailto:aaron@alkimi.org" class="li-nav-btn">Contact Aaron</a>
+    <a href="mailto:aaron@alkimi.org?subject=LinkedIn × Alkimi — Brief" class="li-nav-btn filled">Submit a Brief</a>
+  </div>
+</nav>
+
+<!-- ── 3-COLUMN PAGE ── -->
+<div class="li-page">
+
+  <!-- ═══ LEFT SIDEBAR ═══ -->
+  <aside class="li-sidebar-left">
+
+    <!-- Profile card -->
+    <div class="li-card profile-card">
+      <div class="profile-bg">
+        <!-- Alkimi watermark in profile banner -->
+        <div class="profile-bg-alkimi">
+          <span>ALKIMI</span>
+        </div>
+      </div>
+      <div class="profile-avatar-wrap">
+        <!--
+          PROFILE PICTURE: Replace the initials below with an <img> tag once you have the photo URL.
+          Example: <img src="https://your-photo-url.com/photo.jpg" alt="Aaron Thompson" />
+          The container is already styled as a 64px circle with a white border.
+        -->
+        <div class="profile-avatar">
+          <span class="profile-initials" style="font-size:16px; font-weight:700; letter-spacing:-0.5px;">A×L</span>
+        </div>
+      </div>
+      <div class="profile-info">
+        <div class="profile-name">Alkimi × LinkedIn</div>
+        <div class="profile-title">Knowledge Base · Programmatic Media Solutions</div>
+      </div>
+      <hr class="profile-divider" />
+      <div class="profile-stat">
+        <span class="ps-label">Formats available</span>
+        <span class="ps-val">3</span>
+      </div>
+      <div class="profile-stat">
+        <span class="ps-label">Markets covered</span>
+        <span class="ps-val">UK + EMEA</span>
+      </div>
+      <div class="profile-stat">
+        <span class="ps-label">Fee reduction vs. market</span>
+        <span class="ps-val">Up to −70%</span>
+      </div>
+      <!-- Alkimi branding badge -->
+      <div class="alkimi-sidebar-badge">
+        <span>Prepared by <strong>Alkimi Exchange</strong></span>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="li-card sidebar-nav-card">
+      <div class="sidebar-nav-title">Sections</div>
+      <a href="#howto" class="sidebar-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        How to use this KB
+      </a>
+      <a href="#about" class="sidebar-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        About Alkimi
+      </a>
+      <a href="#solutions" class="sidebar-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Media Solutions
+      </a>
+      <a href="#activation" class="sidebar-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Activation Paths
+      </a>
+      <a href="#targeting" class="sidebar-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+        Targeting & Data
+      </a>
+      <a href="#measurement" class="sidebar-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Measurement
+      </a>
+      <a href="#kbcopy" class="sidebar-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy Knowledge Base
+      </a>
+      <a href="#faq" class="sidebar-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        FAQ
+      </a>
+    </div>
+
+    <!-- Footer links -->
+    <div class="li-card" style="margin-top: 8px;">
+      <div class="sidebar-footer">
+        <p>
+          Prepared by <strong>Alkimi Exchange Ltd.</strong><br/>
+          <a href="mailto:aaron@alkimi.org">aaron@alkimi.org</a><br/>
+          <a href="https://www.linkedin.com/in/aaron-thompson-93b11357" target="_blank" rel="noopener">Aaron on LinkedIn</a><br/>
+          <a href="https://www.linkedin.com/company/alkimi-exchange" target="_blank" rel="noopener">Alkimi on LinkedIn</a><br/>
+          March 2026<br/><br/>
+          Benchmarks indicative. Valid ~3 months from share date.
+        </p>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ═══ MAIN FEED ═══ -->
+  <main>
+
+    <!-- HOW TO USE THIS KB -->
+    <div class="li-card kb-use-card" id="howto">
+      <div class="kb-use-header">
+        <div class="kbu-label">
+          📌 Pinned · Knowledge Base Guide
+        </div>
+        <h2>How to get the most out of this document</h2>
+        <p>Paste this KB into any AI assistant to get instant, accurate answers about Alkimi's platform — before a brief is submitted or a plan is built.</p>
+      </div>
+      <div class="kb-use-body">
+        <p>This knowledge base has been prepared by Alkimi to give LinkedIn's media and partnerships team accurate, self-serve answers about how programmatic advertising works across Alkimi's platform — our media solutions, formats, inventory, and capabilities.</p>
+        <p>To get the most out of it, <strong>paste the full page text into any AI assistant</strong> (ChatGPT, Claude, Gemini, Copilot, Perplexity) and open with this prompt:</p>
+        <div class="kb-prompt-box">
+          "I've been sent this knowledge base about Alkimi's ad platform and media solutions. Please only use the information in this document when answering my questions — if something isn't covered here, tell me rather than guessing. After every answer, please remind me to speak with the Alkimi team before making any decisions, as they can tailor a recommendation to my specific campaign goals."
+        </div>
+        <p style="margin-bottom: 8px; color: var(--muted);">That prompt keeps the AI focused and ensures every answer points toward the right next step. Topics you can ask about include:</p>
+        <div class="kb-chips">
+          <span class="kb-chip">100% Share of Screen</span>
+          <span class="kb-chip">CTV formats & publishers</span>
+          <span class="kb-chip">Amazon DSP PMP setup</span>
+          <span class="kb-chip">Targeting options</span>
+          <span class="kb-chip">Creative specs</span>
+          <span class="kb-chip">Measurement studies</span>
+          <span class="kb-chip">Market coverage</span>
+          <span class="kb-chip">Lead times</span>
+          <span class="kb-chip">Sustainability data</span>
+        </div>
+        <p style="margin-top: 14px; font-size: 12px; color: var(--muted2);">For anything requiring a real conversation — briefs, pricing, commercial terms, or specific publisher relationships — contact <a href="mailto:aaron@alkimi.org" style="color: var(--li-blue);">aaron@alkimi.org</a>.</p>
+      </div>
+    </div>
+
+    <!-- JUNK_TEXTAREA_OPEN
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ABOUT ALKIMI EXCHANGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Alkimi is a certified B Corporation programmatic advertising platform (DSP and Exchange). It is the first and only exchange to run its full auction infrastructure on-chain, removing intermediary layers and reducing advertiser fees.
+
+Key facts:
+- Fee reduction: Up to 70% lower fees vs. industry average (ISBA benchmarked)
+- Carbon: 38% less carbon per impression vs. traditional programmatic (GMSF verified)
+- Clients include: PayPal, Meta, Coca-Cola, American Express, Samsung, TikTok, Cathay Pacific, Currys, Sky, Ripple
+
+Performance benchmarks:
+- Consumer Electronics UK 2024: 3× average ROAS, −51% CPL vs. competitors, +69% lift in purchase intent
+- Samsung UK 2025: 2.7× CTR vs. benchmark, 89% peak VCR
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MEDIA SOLUTIONS — THREE FORMATS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. 100% SHARE OF SCREEN (SOS) — Managed Service
+LinkedIn's brand is the only advertiser on the page. Zero competition, zero clutter using existing IAB standard assets.
+- CTR benchmark: 0.28%–0.32% (Essential through Sequential)
+- Geography: EMEA + Global
+- Activation: Managed Service (Alkimi manages the buy)
+- No bespoke creative needed — uses standard IAB formats
+- Creative specs: 970×250, 300×600, 300×250, 728×90, 320×50 (display); IAB Video up to 20 sec (video); Static + Video + Rich Media (sequential)
+- Benchmarks: 0.28% CTR (display), 0.30% CTR / 0.68% VTR (video), 0.32% CTR / 0.68% VTR (sequential)
+- Why unique: No other DSP can replicate SOS. Alkimi's technology bids on all ad slots on a page simultaneously at screen level.
+
+2. PREMIUM CTV — Managed Service
+Non-skippable pre-roll across Europe's top AVOD and FAST platforms.
+- VCR benchmark: 95%+
+- Geography: UK + EMEA
+- Creative: :15 or :30 sec MP4, 1920×1080
+- Publishers: Sky, Channel 4, ITV, Samsung TV+, LG Ad Solutions, Tubi, Paramount+, Warner Bros. Discovery, Pluto TV, Rakuten TV, Eurosport, Roku, VIZIO, NBC Universal, A&E, Fox
+- CTV targeting: Household-level using ACR data + streaming signals. No cookies. Addressable audience: typically 8–10 million households across EMEA.
+
+3. PMP — OLV & DISPLAY via Amazon DSP (Self-Serve)
+Activate Alkimi's curated premium supply from LinkedIn's own Amazon DSP seat. No IO required.
+- Formats: OLV + Display
+- Activation: Self-Serve via Amazon DSP Private Marketplace
+- Process: Alkimi provides a Deal ID into LinkedIn's Amazon DSP seat. LinkedIn controls budgets, pacing, and frequency.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ACTIVATION PROCESS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Managed Service (SOS & CTV):
+1. Brief submission — LinkedIn shares objectives, audience, markets, flight dates, KPI targets
+2. Plan & proposal — Alkimi builds tailored media plan with pricing
+3. IO sign-off — Insertion Order signed (creative required 5 business days before launch)
+4. Campaign live — Alkimi activates, monitors, optimises with performance reporting
+5. Post-campaign — Brand Uplift Study (Nielsen), Attention Study, AI Search Insights Study
+
+Self-Serve PMP (Amazon DSP):
+1. Deal setup — Alkimi curates supply and configures the PMP deal
+2. Deal ID shared — provided directly into LinkedIn's Amazon DSP seat
+3. LinkedIn activates — sets budgets, pacing, frequency caps in Amazon DSP
+4. Reporting — through LinkedIn's own Amazon DSP dashboard
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TARGETING & DATA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Layer 1 — Placement Graph (Contextual Intelligence):
+Alkimi's proprietary content engine categorises publisher inventory in real time — analysing topic, keyword, editorial category, semantic proximity. No user-level data required. Effective for B2B-adjacent audiences: business news, finance, technology, leadership, career content.
+
+Layer 2 — ALEx AI (Contextual Intelligence + Behavioural Inference):
+Built on the Placement Graph, adds behavioural inference and a performance feedback loop. Progressively reallocates budget toward highest-attention environments. No cookies or persistent IDs.
+
+Layer 3 — 3rd Party Data (Audience Enrichment):
+50+ data providers and DMPs. Key for LinkedIn campaigns:
+- Experian: senior professionals, high-income segments
+- Oracle: in-market B2B technology audiences
+- Eyeota: business decision-makers across EMEA
+- Nielsen: media consumption and household profile data
+
+Cookieless option: Placement Graph + ALEx AI provide a complete targeting solution with no audience data layer required.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MEASUREMENT & REPORTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Standard included:
+- Performance Reporting: impressions, viewability (IAS/DV), VTR, CTR, eCPM, geo/device/publisher breakdown, pixel for on-site measurement
+- Sustainability: 38% less carbon per impression (GMSF). Included as standard.
+- Brand Safety: IAS + DoubleVerify, category exclusions, blocklists, MFA exclusion by default
+
+Available by campaign scale:
+- Brand Uplift Study (Nielsen): unaided/aided awareness, brand consideration, purchase intent. Delivered 4–6 weeks post-campaign.
+- Attention Study: dwell time, scroll interaction, engagement depth
+- AI Search Insights Study: how AI tools (ChatGPT, Perplexity, Google AI) respond to queries about LinkedIn
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FREQUENTLY ASKED QUESTIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Q: Why can't 100% SOS be replicated through a standard DSP?
+A: Standard DSPs bid on one ad slot at a time. Alkimi's technology operates at screen level — analysing all available ad slots on a page simultaneously and bidding for them together. No other DSP can do this.
+
+Q: Does LinkedIn need bespoke creative for 100% SOS?
+A: No. It uses standard IAB formats — the same assets used for any display campaign. Alkimi Studio is available free of charge for enhanced creative.
+
+Q: How does the Amazon DSP PMP work?
+A: Alkimi curates a Private Marketplace deal, provides a Deal ID into LinkedIn's Amazon DSP seat. LinkedIn activates and controls the buy entirely within Amazon DSP. No IO required.
+
+Q: What markets can Alkimi support?
+A: UK, EMEA, MENA, KSA, APAC, Nordics, and the US. Multi-market campaigns can be activated as a single buy.
+
+Q: Are specific publishers guaranteed?
+A: Publisher delivery is auction-based. Alkimi guarantees campaigns serve within a defined quality tier — no MFA sites, no unvetted inventory.
+
+Q: How does CTV targeting work without cookies?
+A: Household-level using ACR (Automatic Content Recognition) data from smart TV panels plus first-party streaming signals. No cookies or mobile IDs. Addressable audience: typically 8–10 million households across EMEA.
+
+Q: What is the lead time?
+A: Managed service: creative assets 5 business days before launch. Amazon DSP PMP: activation controlled by LinkedIn's buying team once Deal ID is shared. No IO required.
+
+Q: How does the on-chain model benefit LinkedIn?
+A: Lower fees — up to 70% below industry average (ISBA benchmarked). More budget reaches actual working media.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CONTACT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Aaron Thompson — Head of Sales, Alkimi Exchange
+Email: aaron@alkimi.org
+For briefs, pricing, commercial terms, or specific publisher relationships.
+
+Benchmarks are indicative, based on historical campaign data. Valid approximately 3 months from date of issue.</textarea>
+        </div>
+        <div class="kb-copy-actions">
+          <button class="kb-copy-btn" onclick="copyKB()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            Copy Knowledge Base
+          </button>
+          <div class="kb-copied-msg">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#057642" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Copied to clipboard
+          </div>
+        </div>
+        <p class="kb-copy-hint">Paste into ChatGPT, Claude, Gemini, Copilot, or Perplexity — then ask anything about Alkimi's formats, targeting, or activation process.</p>
+      </div>
+    </div>
+
+    <!-- OPPORTUNITY STATS -->
+    <div class="li-card" style="margin-top: 8px;">
+      <div class="post-header">
+        <div class="post-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <div class="post-meta">
+          <div class="pm-name">LinkedIn Media Opportunity</div>
+          <div class="pm-sub">Why Alkimi for LinkedIn's own brand campaigns</div>
+        </div>
+      </div>
+      <div class="post-body">
+        <span class="section-tag">Market Context</span>
+        <p>LinkedIn is investing significantly in brand awareness as a strategic priority — approximately 30% of total ad budget. With video consumption on LinkedIn up 36% YoY and EMEA spend accelerating, the appetite for premium, high-impact programmatic is clear.</p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-cell"><div class="sv">$8.2B</div><div class="sl">LinkedIn ad revenue 2025<br/>+18% YoY growth</div></div>
+        <div class="stat-cell"><div class="sv">~30%</div><div class="sl">Budget in brand awareness campaigns</div></div>
+        <div class="stat-cell"><div class="sv">+36%</div><div class="sl">YoY video consumption growth on LinkedIn</div></div>
+        <div class="stat-cell"><div class="sv">82%</div><div class="sl">B2B marketers increasing EMEA spend in 2025</div></div>
+      </div>
+      <div class="post-actions">
+        <button class="post-action-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/></svg>
+          Relevant
+        </button>
+        <button class="post-action-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Ask Aaron
+        </button>
+        <button class="post-action-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Share
+        </button>
+      </div>
+    </div>
+
+    <!-- ABOUT ALKIMI -->
+    <div class="li-card" style="margin-top: 8px;" id="about">
+      <div class="post-header">
+        <div class="post-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="post-meta">
+          <div class="pm-name">About Alkimi Exchange</div>
+          <div class="pm-sub">The programmatic platform built for premium brands</div>
+        </div>
+      </div>
+      <div class="post-body">
+        <span class="section-tag">Platform Overview</span>
+        <p>Alkimi is a certified B Corporation programmatic advertising platform (DSP and Exchange) — the first and only exchange to run its full auction infrastructure on-chain. This removes intermediary layers from the supply chain, reducing fees by up to 70% vs. the industry average (ISBA benchmarked), and leaving significantly more budget for actual media.</p>
+      </div>
+      <ul class="checklist" style="padding: 0 16px;">
+        <li><strong>Low-fee supply chain</strong> — up to 70% lower fees vs. traditional programmatic. More of every LinkedIn budget reaches actual impressions.</li>
+        <li><strong>100% Share of Screen</strong> — Alkimi's flagship format. The only platform capable of owning every ad position on a page simultaneously at auction, using standard IAB assets.</li>
+        <li><strong>Full-funnel CTV marketplace</strong> — Sky, ITV, Channel 4, Samsung TV+, Roku, Paramount+, and 12+ others across Europe and the US.</li>
+        <li><strong>Certified B Corporation</strong> — 38% less carbon per impression vs. traditional programmatic, verified via GMSF methodology.</li>
+      </ul>
+      <div class="client-grid">
+        <span class="client-pill">PayPal</span><span class="client-pill">Meta</span><span class="client-pill">Coca-Cola</span>
+        <span class="client-pill">American Express</span><span class="client-pill">Samsung</span><span class="client-pill">TikTok</span>
+        <span class="client-pill">Cathay Pacific</span><span class="client-pill">Currys</span><span class="client-pill">Sky</span><span class="client-pill">Ripple</span>
+      </div>
+      <div class="info-chip" style="margin-bottom: 16px;">
+        <strong>Performance benchmark:</strong> Consumer Electronics – UK 2024 — 3× average ROAS · −51% CPL vs. competitors · +69% lift in purchase intent · Samsung UK 2025: 2.7× CTR vs. benchmark, 89% peak VCR.
+      </div>
+    </div>
+
+    <!-- MEDIA SOLUTIONS -->
+    <div class="li-card" style="margin-top: 8px;" id="solutions">
+      <div class="post-header">
+        <div class="post-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
+        <div class="post-meta">
+          <div class="pm-name">Media Solutions</div>
+          <div class="pm-sub">Three ways for LinkedIn to activate with Alkimi</div>
+        </div>
+      </div>
+      <div class="post-body">
+        <span class="section-tag">Formats</span>
+        <p>Each solution maps to a different activation model — from fully managed high-impact campaigns to self-serve programmatic buying through Amazon DSP.</p>
+      </div>
+      <div class="format-grid">
+        <!-- SOS -->
+        <div class="fmt-card">
+          <div class="fmt-card-top">
+            <div class="fmt-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+            </div>
+            <div class="fmt-card-type">Managed Service</div>
+            <div class="fmt-card-name">100% Share of Screen</div>
+          </div>
+          <div class="fmt-card-body">
+            <p>LinkedIn's brand is the only advertiser on the page. Zero competition, zero clutter — at programmatic scale using existing IAB standard assets.</p>
+            <div style="margin-bottom: 8px;">
+              <div class="fmt-kpi">0.28%–0.32%</div>
+              <div class="fmt-kpi-lab">CTR benchmark (Essential → Sequential)</div>
+            </div>
+            <span class="fmt-badge blue">Display</span>
+            <span class="fmt-badge blue">Video</span>
+            <span class="fmt-badge blue">Rich Media</span>
+            <span class="fmt-badge">EMEA + Global</span>
+          </div>
+        </div>
+        <!-- CTV -->
+        <div class="fmt-card">
+          <div class="fmt-card-top ctv">
+            <div class="fmt-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </div>
+            <div class="fmt-card-type">Managed Service</div>
+            <div class="fmt-card-name">Premium CTV</div>
+          </div>
+          <div class="fmt-card-body">
+            <p>Non-skippable pre-roll across Europe's top AVOD and FAST platforms. Full-funnel measurement including brand uplift and ROAS.</p>
+            <div style="margin-bottom: 8px;">
+              <div class="fmt-kpi">95%+</div>
+              <div class="fmt-kpi-lab">VCR & Viewability benchmark</div>
+            </div>
+            <span class="fmt-badge blue">:15 & :30 sec</span>
+            <span class="fmt-badge blue">Non-skippable</span>
+            <span class="fmt-badge">UK + EMEA</span>
+          </div>
+        </div>
+        <!-- PMP -->
+        <div class="fmt-card">
+          <div class="fmt-card-top pmp">
+            <div class="fmt-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            </div>
+            <div class="fmt-card-type">Self-Serve via Amazon DSP</div>
+            <div class="fmt-card-name">PMP — OLV & Display</div>
+          </div>
+          <div class="fmt-card-body">
+            <p>Activate Alkimi's curated premium supply directly from LinkedIn's own Amazon DSP seat. Full control on the buy side. No IO required.</p>
+            <div style="margin-bottom: 8px;">
+              <div class="fmt-kpi">OLV + Display</div>
+              <div class="fmt-kpi-lab">Via Amazon DSP Private Marketplace</div>
+            </div>
+            <span class="fmt-badge blue">Amazon DSP</span>
+            <span class="fmt-badge blue">Self-Serve</span>
+            <span class="fmt-badge">No IO needed</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 0 16px 4px; font-size: 13px; font-weight: 600; color: var(--text);">Creative specifications</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Format</th><th>Creative Spec</th><th>Activation</th><th>Benchmark</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>100% SOS Display</td><td>970×250 · 300×600 · 300×250 · 728×90 · 320×50</td><td>Managed Service</td><td>0.28% CTR</td></tr>
+            <tr><td>100% SOS Video</td><td>IAB Video (up to 20 sec) + Rich Media</td><td>Managed Service</td><td>0.30% CTR / 0.68% VTR</td></tr>
+            <tr><td>100% SOS Sequential</td><td>Static + Video + Rich Media combination</td><td>Managed Service</td><td>0.32% CTR / 0.68% VTR</td></tr>
+            <tr><td>Premium CTV</td><td>:15 or :30 sec MP4 · 1920×1080</td><td>Managed Service</td><td>95%+ VCR</td></tr>
+            <tr><td>OLV / Display PMP</td><td>Standard IAB display + video units</td><td>Amazon DSP (Self-Serve)</td><td>Campaign-dependent</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="post-actions" style="margin-top: 0;">
+        <button class="post-action-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/></svg>
+          Relevant
+        </button>
+        <button class="post-action-btn" onclick="window.location.href='mailto:aaron@alkimi.org?subject=LinkedIn × Alkimi — Brief'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Request a plan
+        </button>
+      </div>
+    </div>
+
+    <!-- ACTIVATION PATHS -->
+    <div class="li-card" style="margin-top: 8px;" id="activation">
+      <div class="post-header">
+        <div class="post-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+        </div>
+        <div class="post-meta">
+          <div class="pm-name">Activation Paths</div>
+          <div class="pm-sub">How LinkedIn goes live with Alkimi</div>
+        </div>
+      </div>
+      <div class="post-body" style="padding-bottom: 0;">
+        <span class="section-tag">Process</span>
+        <p>Two clear routes to market. Choose based on whether LinkedIn's team wants Alkimi to manage the buy, or self-serve through Amazon DSP.</p>
+      </div>
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab(this,'managed')">Managed Service (SOS & CTV)</button>
+        <button class="tab-btn" onclick="switchTab(this,'selfserve')">Self-Serve PMP (Amazon DSP)</button>
+      </div>
+      <div class="tab-panel active" id="tab-managed">
+        <div class="steps">
+          <div class="step"><div class="step-dot">1</div><div class="step-content"><h4>Brief submission</h4><p>LinkedIn shares campaign objectives, audience parameters, markets, flight dates, and KPI targets with Aaron at Alkimi.</p></div></div>
+          <div class="step"><div class="step-dot">2</div><div class="step-content"><h4>Plan & proposal</h4><p>Alkimi builds a tailored media plan — format mix (100% SOS, CTV, Cross-Screen), publisher selection, targeting strategy, measurement approach, and indicative pricing.</p></div></div>
+          <div class="step"><div class="step-dot">3</div><div class="step-content"><h4>IO sign-off</h4><p>An Insertion Order is signed covering flight dates, budget, line items, KPI targets, and creative specs. Creative assets required 5 business days before launch.</p></div></div>
+          <div class="step"><div class="step-dot">4</div><div class="step-content"><h4>Campaign live + ongoing optimisation</h4><p>Alkimi activates, monitors, and optimises. Performance reporting: impressions, viewability, VTR, CTR, publisher breakdown. Proactive flags if pacing is off-target.</p></div></div>
+          <div class="step"><div class="step-dot">5</div><div class="step-content"><h4>Post-campaign measurement</h4><p>Brand Uplift Study (Nielsen), Attention Study, and AI Search Insights Study available by campaign scale. Results 4–6 weeks post-campaign.</p></div></div>
+        </div>
+        <div class="info-chip" style="margin: 0;">
+          <strong>Alkimi Studio</strong> — available free of charge for any creative build support. Video, rich media, sequential storytelling, and shoppable units within the SOS framework at no additional cost.
+        </div>
+      </div>
+      <div class="tab-panel" id="tab-selfserve">
+        <div class="steps">
+          <div class="step"><div class="step-dot">1</div><div class="step-content"><h4>Deal setup (Alkimi side)</h4><p>LinkedIn's media team shares targeting requirements, format preferences (OLV or Display), and market scope. Alkimi curates the supply and configures the PMP deal.</p></div></div>
+          <div class="step"><div class="step-dot">2</div><div class="step-content"><h4>Deal ID shared to Amazon DSP</h4><p>Alkimi provides the Deal ID directly into LinkedIn's Amazon DSP seat. No IO required — the deal is activated and controlled entirely by LinkedIn's buying team.</p></div></div>
+          <div class="step"><div class="step-dot">3</div><div class="step-content"><h4>LinkedIn activates and manages</h4><p>LinkedIn's team sets budgets, pacing, and frequency caps within Amazon DSP. Alkimi's curated supply and targeting signals are pre-applied at the deal level.</p></div></div>
+          <div class="step"><div class="step-dot">4</div><div class="step-content"><h4>Reporting</h4><p>LinkedIn reports through their own Amazon DSP dashboard. Alkimi can provide supplementary supply-side data on request.</p></div></div>
+        </div>
+        <div class="info-chip" style="margin: 0;">
+          <strong>Best for:</strong> Teams that want full control of the buy in their own Amazon DSP seat, always-on campaigns, OLV and display formats, and flexibility to adjust quickly without a managed service overhead.
+        </div>
+      </div>
+    </div>
+
+    <!-- CTV PUBLISHERS -->
+    <div class="li-card" style="margin-top: 8px;">
+      <div class="post-header">
+        <div class="post-avatar" style="background: linear-gradient(135deg, #057642, #0a8a4e);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="post-meta">
+          <div class="pm-name">CTV Inventory</div>
+          <div class="pm-sub">Premium streaming platforms across Europe & US</div>
+        </div>
+      </div>
+      <div class="post-body">
+        <span class="section-tag">Publishers</span>
+        <p>Alkimi's CTV marketplace spans major AVOD and FAST platforms — reaching engaged viewers on the biggest screen. Non-skippable pre-roll only, 95%+ viewability and VCR benchmarks.</p>
+      </div>
+      <div class="publisher-list">
+        <span class="pub-pill">Sky</span><span class="pub-pill">Channel 4</span><span class="pub-pill">ITV</span>
+        <span class="pub-pill">Samsung TV+</span><span class="pub-pill">LG Ad Solutions</span><span class="pub-pill">Tubi</span>
+        <span class="pub-pill">Paramount+</span><span class="pub-pill">Warner Bros. Discovery</span><span class="pub-pill">Pluto TV</span>
+        <span class="pub-pill">Rakuten TV</span><span class="pub-pill">Eurosport</span><span class="pub-pill">Roku</span>
+        <span class="pub-pill">VIZIO</span><span class="pub-pill">NBC Universal</span><span class="pub-pill">A&E</span><span class="pub-pill">Fox</span>
+      </div>
+      <div class="info-chip">
+        <strong>CTV targeting for LinkedIn campaigns:</strong> Household-level using ACR data + streaming behaviour signals. Genre matching, device type, geographic location, and household profile — no cookies or mobile IDs. With full data layering: typically <strong>8–10 million addressable households</strong> across EMEA.
+      </div>
+    </div>
+
+    <!-- TARGETING & DATA -->
+    <div class="li-card" style="margin-top: 8px;" id="targeting">
+      <div class="post-header">
+        <div class="post-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
+        <div class="post-meta">
+          <div class="pm-name">Targeting & Data</div>
+          <div class="pm-sub">Reaching the right professional audiences at scale</div>
+        </div>
+      </div>
+      <div class="post-body">
+        <span class="section-tag">Data Strategy</span>
+        <p>Alkimi's targeting architecture operates in three layers — deployable individually or combined, with no reliance on cookies or persistent user IDs.</p>
+      </div>
+      <div class="layer-stack">
+        <div class="layer">
+          <h4><span class="layer-num-badge">1</span> Placement Graph — Contextual Intelligence</h4>
+          <p>Alkimi's proprietary content engine crawls and categorises publisher inventory in real time — analysing topic, keyword, editorial category, and semantic proximity. Campaigns target relevant content environments without any user-level data. Particularly effective for LinkedIn's B2B-adjacent audience: business news, finance, technology, leadership, and career content.</p>
+        </div>
+        <div class="layer">
+          <h4><span class="layer-num-badge">2</span> ALEx AI — Contextual Intelligence Layer</h4>
+          <p>Built on the Placement Graph, ALEx AI adds behavioural inference and a performance feedback loop — identifying users whose content consumption signals affinity with the campaign, and progressively reallocating budget toward the highest-attention environments over the flight. Can be tuned to professional decision-maker and thought leadership content environments.</p>
+        </div>
+        <div class="layer">
+          <h4><span class="layer-num-badge">3</span> 3rd Party Data — Audience Enrichment</h4>
+          <p>50+ third-party data providers and DMPs available. Relevant for LinkedIn campaigns: <strong>Experian</strong> (senior professionals, high-income segments), <strong>Oracle</strong> (in-market B2B technology audiences), <strong>Eyeota</strong> (business decision-makers across EMEA), <strong>Nielsen</strong> (media consumption and household profile data).</p>
+        </div>
+      </div>
+      <div class="info-chip">
+        <strong>Contextual-only option:</strong> Placement Graph + ALEx AI together provide a complete targeting solution with no audience data layer required — fully functional for cookieless environments and brands with strict data privacy requirements.
+      </div>
+    </div>
+
+    <!-- MEASUREMENT -->
+    <div class="li-card" style="margin-top: 8px;" id="measurement">
+      <div class="post-header">
+        <div class="post-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div class="post-meta">
+          <div class="pm-name">Measurement & Reporting</div>
+          <div class="pm-sub">Proving what the campaign actually achieved</div>
+        </div>
+      </div>
+      <div class="post-body">
+        <span class="section-tag">Analytics</span>
+        <p>Standard performance reporting, brand uplift studies, attention metrics, and sustainability data — all available as part of the campaign package.</p>
+      </div>
+      <div class="measure-grid">
+        <div class="measure-card">
+          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <h4>Performance Reporting</h4>
+          <p>Impressions, viewability (IAS/DV integrated), VTR, CTR, effective CPM, geo & device breakdown, publisher-level performance. Pixel available for on-site session measurement.</p>
+        </div>
+        <div class="measure-card">
+          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+          <h4>Brand Uplift Study</h4>
+          <p>Powered by Nielsen. Exposed vs. control group measuring unaided/aided awareness, brand consideration, and purchase intent. Delivered 4–6 weeks post-campaign.</p>
+        </div>
+        <div class="measure-card">
+          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h4>Attention Study</h4>
+          <p>Alkimi's proprietary attention measurement — dwell time, scroll interaction, engagement depth. Clearer picture of genuine creative exposure beyond standard viewability.</p>
+        </div>
+        <div class="measure-card">
+          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+          <h4>AI Search Insights</h4>
+          <p>Alkimi's proprietary study auditing how AI tools (ChatGPT, Perplexity, Google AI Overviews) respond to queries relevant to LinkedIn — brand mentions, sentiment, share of voice.</p>
+        </div>
+        <div class="measure-card">
+          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></div>
+          <h4>Sustainability Reporting</h4>
+          <p>38% less carbon per impression vs. traditional programmatic, verified via GMSF. Carbon reporting available as standard to support LinkedIn's own sustainability disclosures.</p>
+        </div>
+        <div class="measure-card">
+          <div class="measure-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h4>Brand Safety</h4>
+          <p>IAS and DoubleVerify integration, category exclusions, domain-level blocklists, competitor exclusions, and MFA exclusion applied by default — configurable at line item level.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="li-card" style="margin-top: 8px;" id="faq">
+      <div class="post-header">
+        <div class="post-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="post-meta">
+          <div class="pm-name">Frequently Asked Questions</div>
+          <div class="pm-sub">Common questions from media teams evaluating Alkimi</div>
+        </div>
+      </div>
+      <div class="post-body" style="padding-bottom: 4px;">
+        <span class="section-tag">FAQ</span>
+      </div>
+      <div class="accordion" id="faqAccordion">
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><h4>Why can't 100% Share of Screen be replicated through a standard DSP?</h4><div class="acc-icon">▾</div></div>
+          <div class="acc-body"><div class="acc-body-inner">Every other DSP views ad impressions in isolation — bidding on one slot at a time without awareness of other positions on the same page. Alkimi's technology operates at a <strong>screen level</strong>: analysing all available ad slots on a page simultaneously and bidding for them together. This is what makes a true 100% Share of Screen buy possible — owning every ad position at the moment the right user lands on the page. No other DSP can replicate this.</div></div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><h4>Does LinkedIn need bespoke creative for 100% SOS?</h4><div class="acc-icon">▾</div></div>
+          <div class="acc-body"><div class="acc-body-inner">No. 100% SOS uses <strong>standard IAB ad formats</strong> — the same creative assets LinkedIn would produce for any display campaign. No bespoke production, no publisher-by-publisher approval, and no additional lead time. If LinkedIn wants to elevate executions with video or interactive rich media, <strong>Alkimi Studio</strong> is available free of charge.</div></div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><h4>How does the Amazon DSP PMP work in practice?</h4><div class="acc-icon">▾</div></div>
+          <div class="acc-body"><div class="acc-body-inner">Alkimi curates a Private Marketplace deal with premium supply and targeting pre-applied. A <strong>Deal ID</strong> is provided directly into LinkedIn's Amazon DSP seat — LinkedIn's team then activates the deal, sets budgets, pacing, and frequency caps, and manages the campaign entirely within Amazon DSP. No IO required. Alkimi's preferred route for teams wanting direct control of the buy.</div></div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><h4>What markets can Alkimi support for LinkedIn campaigns?</h4><div class="acc-icon">▾</div></div>
+          <div class="acc-body"><div class="acc-body-inner">Alkimi operates across the <strong>UK, EMEA, MENA, KSA, APAC, the Nordics, and the US</strong>. Multi-market campaigns can be planned and activated as a single buy — no separate supplier relationships or local market negotiations required.</div></div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><h4>Are specific publishers guaranteed in a campaign?</h4><div class="acc-icon">▾</div></div>
+          <div class="acc-body"><div class="acc-body-inner">Publisher delivery on programmatic campaigns is real-time and auction-based. A fixed impression count on a named publication cannot be guaranteed. What Alkimi <em>can</em> guarantee: campaigns serve exclusively within a defined quality tier — <strong>no MFA sites, no unvetted inventory</strong>. If a guaranteed placement on a specific title is required for a line item, a PMP or direct deal alongside the programmatic campaign is the right approach.</div></div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><h4>How does CTV targeting work without cookies?</h4><div class="acc-icon">▾</div></div>
+          <div class="acc-body"><div class="acc-body-inner">Alkimi's CTV targeting operates at the household level using <strong>ACR (Automatic Content Recognition) data</strong> from smart TV panels, plus first-party streaming behaviour signals from AVOD and FAST platform partners. Parameters include content genre, viewing behaviour, device type, geographic location, and household profile. Combined addressable audience with full data layering: typically <strong>8–10 million households</strong> across EMEA.</div></div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><h4>What is the lead time to get a campaign live?</h4><div class="acc-icon">▾</div></div>
+          <div class="acc-body"><div class="acc-body-inner"><strong>Managed service:</strong> Creative assets required at least 5 business days before launch. IO sign-off recommended with sufficient lead time for trafficking and QA.<br/><br/><strong>Amazon DSP PMP (self-serve):</strong> Once a Deal ID is shared into LinkedIn's seat, activation timelines are controlled by LinkedIn's buying team. No IO required.</div></div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)"><h4>How does the on-chain model benefit LinkedIn as an advertiser?</h4><div class="acc-icon">▾</div></div>
+          <div class="acc-body"><div class="acc-body-inner">The practical outcome of Alkimi's on-chain infrastructure is <strong>lower network costs</strong> passed directly to advertisers as reduced fees — up to 70% lower than the industry average (ISBA benchmarked). More of every LinkedIn media budget reaches actual impressions and working media, rather than platform costs. This operates alongside standard third-party verification through IAS and DoubleVerify.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI KNOWLEDGE BASE COPY -->
+    <div class="li-card kb-copy-card" style="margin-top: 8px;" id="kbcopy">
+      <div class="kb-copy-header">
+        <div class="kbc-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          AI Knowledge Base · Copy &amp; Paste
+        </div>
+        <h2>Built for AI platforms</h2>
+        <p>Copy the full knowledge base below and paste it into any AI assistant to get instant answers about Alkimi's formats, targeting, and activation process.</p>
+      </div>
+      <div class="kb-copy-body">
+        <p>Paste and start asking questions. Every section is clearly labelled for accurate AI retrieval.</p>
+        <div class="kb-platforms">
+          <span class="kb-platform-pill">ChatGPT</span>
+          <span class="kb-platform-pill">Claude</span>
+          <span class="kb-platform-pill">Gemini</span>
+          <span class="kb-platform-pill">Copilot</span>
+          <span class="kb-platform-pill">Perplexity</span>
+        </div>
+        <div class="kb-textarea-wrap">
+          <textarea class="kb-textarea" id="kbTextarea" readonly>ALKIMI EXCHANGE — KNOWLEDGE BASE FOR LINKEDIN
+Prepared by: Aaron Thompson, Head of Sales, Alkimi Exchange
+Contact: aaron@alkimi.org | March 2026
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+HOW TO USE THIS DOCUMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Paste this text into any AI assistant (ChatGPT, Claude, Gemini, Copilot, Perplexity) and open with this prompt:
+
+"I've been sent this knowledge base about Alkimi's ad platform and media solutions. Please only use the information in this document when answering my questions — if something isn't covered here, tell me rather than guessing. After every answer, please remind me to speak with the Alkimi team before making any decisions, as they can tailor a recommendation to my specific campaign goals."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ABOUT ALKIMI EXCHANGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Alkimi is a certified B Corporation programmatic advertising platform (DSP and Exchange). It is the first and only exchange to run its full auction infrastructure on-chain, removing intermediary layers and reducing advertiser fees.
+
+Key facts:
+- Fee reduction: Up to 70% lower fees vs. industry average (ISBA benchmarked)
+- Carbon: 38% less carbon per impression vs. traditional programmatic (GMSF verified)
+- Clients include: PayPal, Meta, Coca-Cola, American Express, Samsung, TikTok, Cathay Pacific, Currys, Sky, Ripple
+
+Performance benchmarks:
+- Consumer Electronics UK 2024: 3× average ROAS, −51% CPL vs. competitors, +69% lift in purchase intent
+- Samsung UK 2025: 2.7× CTR vs. benchmark, 89% peak VCR
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MEDIA SOLUTIONS — THREE FORMATS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. 100% SHARE OF SCREEN (SOS) — Managed Service
+LinkedIn's brand is the only advertiser on the page. Zero competition, zero clutter using existing IAB standard assets.
+- CTR benchmark: 0.28%–0.32% (Essential through Sequential)
+- Geography: EMEA + Global
+- Activation: Managed Service (Alkimi manages the buy)
+- No bespoke creative needed — uses standard IAB formats
+- Creative specs: 970×250, 300×600, 300×250, 728×90, 320×50 (display); IAB Video up to 20 sec (video); Static + Video + Rich Media (sequential)
+- Benchmarks: 0.28% CTR (display), 0.30% CTR / 0.68% VTR (video), 0.32% CTR / 0.68% VTR (sequential)
+- Why unique: No other DSP can replicate SOS. Alkimi's technology bids on all ad slots on a page simultaneously at screen level.
+
+2. PREMIUM CTV — Managed Service
+Non-skippable pre-roll across Europe's top AVOD and FAST platforms.
+- VCR benchmark: 95%+
+- Geography: UK + EMEA
+- Creative: :15 or :30 sec MP4, 1920×1080
+- Publishers: Sky, Channel 4, ITV, Samsung TV+, LG Ad Solutions, Tubi, Paramount+, Warner Bros. Discovery, Pluto TV, Rakuten TV, Eurosport, Roku, VIZIO, NBC Universal, A&E, Fox
+- CTV targeting: Household-level using ACR data + streaming signals. No cookies. Addressable audience: typically 8–10 million households across EMEA.
+
+3. PMP — OLV & DISPLAY via Amazon DSP (Self-Serve)
+Activate Alkimi's curated premium supply from LinkedIn's own Amazon DSP seat. No IO required.
+- Formats: OLV + Display
+- Activation: Self-Serve via Amazon DSP Private Marketplace
+- Process: Alkimi provides a Deal ID into LinkedIn's Amazon DSP seat. LinkedIn controls budgets, pacing, and frequency.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ACTIVATION PROCESS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Managed Service (SOS & CTV):
+1. Brief submission — LinkedIn shares objectives, audience, markets, flight dates, KPI targets
+2. Plan & proposal — Alkimi builds tailored media plan with pricing
+3. IO sign-off — Insertion Order signed (creative required 5 business days before launch)
+4. Campaign live — Alkimi activates, monitors, optimises with performance reporting
+5. Post-campaign — Brand Uplift Study (Nielsen), Attention Study, AI Search Insights Study
+
+Self-Serve PMP (Amazon DSP):
+1. Deal setup — Alkimi curates supply and configures the PMP deal
+2. Deal ID shared — provided directly into LinkedIn's Amazon DSP seat
+3. LinkedIn activates — sets budgets, pacing, frequency caps in Amazon DSP
+4. Reporting — through LinkedIn's own Amazon DSP dashboard
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TARGETING & DATA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Layer 1 — Placement Graph (Contextual Intelligence):
+Alkimi's proprietary content engine categorises publisher inventory in real time — analysing topic, keyword, editorial category, semantic proximity. No user-level data required. Effective for B2B-adjacent audiences: business news, finance, technology, leadership, career content.
+
+Layer 2 — ALEx AI (Contextual Intelligence + Behavioural Inference):
+Built on the Placement Graph, adds behavioural inference and a performance feedback loop. Progressively reallocates budget toward highest-attention environments. No cookies or persistent IDs.
+
+Layer 3 — 3rd Party Data (Audience Enrichment):
+50+ data providers and DMPs. Key for LinkedIn campaigns:
+- Experian: senior professionals, high-income segments
+- Oracle: in-market B2B technology audiences
+- Eyeota: business decision-makers across EMEA
+- Nielsen: media consumption and household profile data
+
+Cookieless option: Placement Graph + ALEx AI provide a complete targeting solution with no audience data layer required.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MEASUREMENT & REPORTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Standard included:
+- Performance Reporting: impressions, viewability (IAS/DV), VTR, CTR, eCPM, geo/device/publisher breakdown, pixel for on-site measurement
+- Sustainability: 38% less carbon per impression (GMSF). Included as standard.
+- Brand Safety: IAS + DoubleVerify, category exclusions, blocklists, MFA exclusion by default
+
+Available by campaign scale:
+- Brand Uplift Study (Nielsen): unaided/aided awareness, brand consideration, purchase intent. Delivered 4–6 weeks post-campaign.
+- Attention Study: dwell time, scroll interaction, engagement depth
+- AI Search Insights Study: how AI tools (ChatGPT, Perplexity, Google AI) respond to queries about LinkedIn
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FREQUENTLY ASKED QUESTIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Q: Why can't 100% SOS be replicated through a standard DSP?
+A: Standard DSPs bid on one ad slot at a time. Alkimi's technology operates at screen level — analysing all available ad slots on a page simultaneously and bidding for them together. No other DSP can do this.
+
+Q: Does LinkedIn need bespoke creative for 100% SOS?
+A: No. It uses standard IAB formats — the same assets used for any display campaign. Alkimi Studio is available free of charge for enhanced creative.
+
+Q: How does the Amazon DSP PMP work?
+A: Alkimi curates a Private Marketplace deal, provides a Deal ID into LinkedIn's Amazon DSP seat. LinkedIn activates and controls the buy entirely within Amazon DSP. No IO required.
+
+Q: What markets can Alkimi support?
+A: UK, EMEA, MENA, KSA, APAC, Nordics, and the US. Multi-market campaigns can be activated as a single buy.
+
+Q: Are specific publishers guaranteed?
+A: Publisher delivery is auction-based. Alkimi guarantees campaigns serve within a defined quality tier — no MFA sites, no unvetted inventory.
+
+Q: How does CTV targeting work without cookies?
+A: Household-level using ACR (Automatic Content Recognition) data from smart TV panels plus first-party streaming signals. No cookies or mobile IDs. Addressable audience: typically 8–10 million households across EMEA.
+
+Q: What is the lead time?
+A: Managed service: creative assets 5 business days before launch. Amazon DSP PMP: activation controlled by LinkedIn's buying team once Deal ID is shared. No IO required.
+
+Q: How does the on-chain model benefit LinkedIn?
+A: Lower fees — up to 70% below industry average (ISBA benchmarked). More budget reaches actual working media.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CONTACT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Aaron Thompson — Head of Sales, Alkimi Exchange
+Email: aaron@alkimi.org
+For briefs, pricing, commercial terms, or specific publisher relationships.
+
+Benchmarks are indicative, based on historical campaign data. Valid approximately 3 months from date of issue.</textarea>
+        </div>
+        <div class="kb-copy-actions">
+          <button class="kb-copy-btn" onclick="copyKB()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            Copy Knowledge Base
+          </button>
+          <div class="kb-copied-msg" id="copiedMsg">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#057642" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Copied to clipboard
+          </div>
+        </div>
+        <p class="kb-copy-hint">Paste into ChatGPT, Claude, Gemini, Copilot, or Perplexity — then ask anything about Alkimi's formats, targeting, or activation process.</p>
+      </div>
+    </div>
+
+    <!-- CTA BOTTOM -->
+    <div class="cta-card" style="margin-top: 8px;">
+      <h2>Ready to explore a LinkedIn × Alkimi campaign?</h2>
+      <p>A document will always be less useful than a direct conversation. Reach out to discuss formats, markets, measurement, and what a first campaign could look like.</p>
+      <div class="cta-btns">
+        <a href="mailto:aaron@alkimi.org?subject=LinkedIn × Alkimi — Brief" class="cta-btn-w">Submit a brief</a>
+        <a href="mailto:aaron@alkimi.org?subject=LinkedIn × Alkimi — Amazon DSP PMP" class="cta-btn-o">Set up an Amazon DSP PMP deal</a>
+      </div>
+      <p style="font-size: 12px; margin-top: 20px; color: rgba(255,255,255,0.65); display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap;">
+        <span><strong style="color: rgba(255,255,255,0.9);">Aaron Thompson</strong> — Head of Sales, Alkimi Exchange · aaron@alkimi.org</span>
+        <a href="https://www.linkedin.com/in/aaron-thompson-93b11357" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:5px; color:rgba(255,255,255,0.8); text-decoration:none; border:1px solid rgba(255,255,255,0.35); border-radius:12px; padding:4px 10px; font-size:12px; white-space:nowrap;">
+          <svg width="12" height="12" viewBox="0 0 34 34" fill="none"><rect width="34" height="34" rx="4" fill="rgba(255,255,255,0.2)"/><path d="M7 13.5h4.5V27H7V13.5zM9.25 11.8a2.3 2.3 0 110-4.6 2.3 2.3 0 010 4.6zM14.5 13.5H19v1.85c.68-1.28 2.3-2.1 4.2-2.1C27 13.25 27 16.5 27 19v8h-4.5v-7.5c0-1.8-.35-3.2-2.1-3.2-1.75 0-2.4 1.4-2.4 3.2V27h-3.5V13.5z" fill="white"/></svg>
+          Connect on LinkedIn
+        </a>
+        <a href="https://www.linkedin.com/company/alkimi-exchange" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:5px; color:rgba(255,255,255,0.8); text-decoration:none; border:1px solid rgba(255,255,255,0.35); border-radius:12px; padding:4px 10px; font-size:12px; white-space:nowrap;">
+          <svg width="12" height="12" viewBox="0 0 34 34" fill="none"><rect width="34" height="34" rx="4" fill="rgba(255,255,255,0.2)"/><path d="M7 13.5h4.5V27H7V13.5zM9.25 11.8a2.3 2.3 0 110-4.6 2.3 2.3 0 010 4.6zM14.5 13.5H19v1.85c.68-1.28 2.3-2.1 4.2-2.1C27 13.25 27 16.5 27 19v8h-4.5v-7.5c0-1.8-.35-3.2-2.1-3.2-1.75 0-2.4 1.4-2.4 3.2V27h-3.5V13.5z" fill="white"/></svg>
+          Alkimi on LinkedIn
+        </a>
+      </p>
+    </div>
+
+  </main>
+
+  <!-- ═══ RIGHT SIDEBAR ═══ -->
+  <aside class="li-sidebar-right">
+
+    <!-- Quick CTA card with Aaron avatar -->
+    <div class="li-card right-cta-card">
+      <div class="right-cta-bg">
+        <!--
+          RIGHT SIDEBAR PHOTO: Replace the initials span with an <img> once you have the photo URL.
+          Example: <img src="https://your-photo-url.com/photo.jpg" alt="Aaron Thompson" />
+        -->
+        <div class="right-cta-avatar">
+          <span>AT</span>
+        </div>
+        <h4>Talk to Aaron</h4>
+        <p>Head of Sales, Alkimi Exchange. Ready to build a plan for LinkedIn's EMEA campaigns.</p>
+        <a href="mailto:aaron@alkimi.org?subject=LinkedIn × Alkimi — Brief" class="right-cta-btn" style="margin-bottom:8px;">Submit a brief →</a>
+        <a href="https://www.linkedin.com/in/aaron-thompson-93b11357" target="_blank" rel="noopener" style="display:flex; align-items:center; justify-content:center; gap:6px; font-size:12px; color:rgba(255,255,255,0.8); text-decoration:none; margin-top:4px;">
+          <svg width="12" height="12" viewBox="0 0 34 34" fill="none"><rect width="34" height="34" rx="4" fill="rgba(255,255,255,0.25)"/><path d="M7 13.5h4.5V27H7V13.5zM9.25 11.8a2.3 2.3 0 110-4.6 2.3 2.3 0 010 4.6zM14.5 13.5H19v1.85c.68-1.28 2.3-2.1 4.2-2.1C27 13.25 27 16.5 27 19v8h-4.5v-7.5c0-1.8-.35-3.2-2.1-3.2-1.75 0-2.4 1.4-2.4 3.2V27h-3.5V13.5z" fill="white"/></svg>
+          View LinkedIn profile
+        </a>
+      </div>
+      <div class="right-stat-row">
+        <div class="rsb"><div class="rval">−70%</div><div class="rlab">Lower fees vs. market</div></div>
+        <div class="rsb"><div class="rval">95%+</div><div class="rlab">CTV viewability</div></div>
+      </div>
+    </div>
+
+    <!-- Format quick reference -->
+    <div class="li-card" style="margin-top: 8px;">
+      <div class="right-card-title">Available formats</div>
+      <div class="right-format-item">
+        <div class="rfi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+        </div>
+        <div class="rfi-text"><div class="rfi-name">100% Share of Screen</div><div class="rfi-sub">Managed · Display + Video</div></div>
+      </div>
+      <div class="right-format-item">
+        <div class="rfi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="rfi-text"><div class="rfi-name">Premium CTV</div><div class="rfi-sub">Managed · :15 & :30 sec</div></div>
+      </div>
+      <div class="right-format-item">
+        <div class="rfi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        </div>
+        <div class="rfi-text"><div class="rfi-name">Amazon DSP PMP</div><div class="rfi-sub">Self-Serve · OLV + Display</div></div>
+      </div>
+    </div>
+
+    <!-- Key stats card -->
+    <div class="li-card" style="margin-top: 8px;">
+      <div class="right-card-title">Key benchmarks</div>
+      <div class="right-format-item">
+        <div class="rfi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <div class="rfi-text"><div class="rfi-name">0.28%–0.32%</div><div class="rfi-sub">100% SOS CTR benchmark</div></div>
+      </div>
+      <div class="right-format-item">
+        <div class="rfi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+        </div>
+        <div class="rfi-text"><div class="rfi-name">95%+ VCR</div><div class="rfi-sub">CTV completion rate</div></div>
+      </div>
+      <div class="right-format-item">
+        <div class="rfi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="rfi-text"><div class="rfi-name">3× ROAS</div><div class="rfi-sub">Consumer Electronics UK 2024</div></div>
+      </div>
+      <div class="right-format-item">
+        <div class="rfi-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+        </div>
+        <div class="rfi-text"><div class="rfi-name">−38% carbon</div><div class="rfi-sub">vs. traditional programmatic</div></div>
+      </div>
+    </div>
+
+    <!-- Alkimi branding card -->
+    <div class="li-card" style="margin-top: 8px; background: linear-gradient(135deg, #0A66C2 0%, #004182 100%); border: none;">
+      <div style="padding: 16px; text-align: center;">
+        <!-- Alkimi wordmark -->
+        <div style="display:flex; align-items:center; justify-content:center; margin-bottom: 6px;">
+          <span style="font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.03em; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;">alkimi</span>
+        </div>
+        <div style="font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 2px;">Knowledge Base Document</div>
+        <div style="font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 8px; line-height: 1.8;">Prepared by Aaron Thompson<br/>aaron@alkimi.org · March 2026</div>
+        <a href="https://www.linkedin.com/company/alkimi-exchange" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:5px; font-size:11px; color:rgba(255,255,255,0.75); text-decoration:none; margin-top:8px; padding: 4px 10px; border: 1px solid rgba(255,255,255,0.3); border-radius: 12px; transition: background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
+          <svg width="11" height="11" viewBox="0 0 34 34" fill="none"><rect width="34" height="34" rx="4" fill="rgba(255,255,255,0.2)"/><path d="M7 13.5h4.5V27H7V13.5zM9.25 11.8a2.3 2.3 0 110-4.6 2.3 2.3 0 010 4.6zM14.5 13.5H19v1.85c.68-1.28 2.3-2.1 4.2-2.1C27 13.25 27 16.5 27 19v8h-4.5v-7.5c0-1.8-.35-3.2-2.1-3.2-1.75 0-2.4 1.4-2.4 3.2V27h-3.5V13.5z" fill="white"/></svg>
+          Follow Alkimi
+        </a>
+      </div>
+    </div>
+
+    <!-- Markets card -->
+    <div class="li-card" style="margin-top: 8px;">
+      <div class="right-card-title">Markets covered</div>
+      <div style="padding: 4px 16px 12px; display: flex; flex-wrap: wrap; gap: 4px;">
+        <span class="pub-pill">UK</span><span class="pub-pill">EMEA</span><span class="pub-pill">MENA</span>
+        <span class="pub-pill">KSA</span><span class="pub-pill">APAC</span><span class="pub-pill">Nordics</span><span class="pub-pill">US</span>
+      </div>
+    </div>
+
+  </aside>
+
+</div><!-- end .li-page -->
+
+<!-- FOOTER -->
+<div class="li-footer">
+  <p>Prepared by <strong>Alkimi Exchange Ltd.</strong> for LinkedIn's media and partnerships team · March 2026 · <a href="mailto:aaron@alkimi.org" style="color: var(--li-blue);">aaron@alkimi.org</a> · No commercial rates or contractual terms are included in this document. Benchmarks are indicative, based on historical campaign data. Valid approximately 3 months from date of issue. Alkimi is a <strong>Certified B Corporation</strong>.</p>
+</div>
+
+<!-- JS -->
+<script>
+  function switchTab(btn, id) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + id).classList.add('active');
+  }
+
+  function toggleAcc(header) {
+    const item = header.parentElement;
+    const body = item.querySelector('.acc-body');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.acc-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.acc-body').style.maxHeight = '0';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  }
+
+  function copyKB() {
+    const textarea = document.getElementById('kbTextarea');
+    textarea.select();
+    textarea.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(textarea.value).then(() => {
+      const msg = document.getElementById('copiedMsg');
+      msg.classList.add('visible');
+      setTimeout(() => msg.classList.remove('visible'), 3000);
+    }).catch(() => {
+      // Fallback for older browsers
+      document.execCommand('copy');
+      const msg = document.getElementById('copiedMsg');
+      msg.classList.add('visible');
+      setTimeout(() => msg.classList.remove('visible'), 3000);
+    });
+  }
+
+  // Scrollspy
+  const navItems = document.querySelectorAll('.li-nav-item');
+  const sections = document.querySelectorAll('[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    navItems.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
